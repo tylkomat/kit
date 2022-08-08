@@ -33,6 +33,11 @@ export default function (opts = {}) {
 				})};\n`
 			);
 
+			writeFileSync(
+				`${out}/package.json`,
+				builder.generatePackageJson()
+			)
+
 			builder.copy(files, out, {
 				replace: {
 					SERVER: './server/index.js',

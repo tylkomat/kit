@@ -6,6 +6,7 @@ import { promisify } from 'util';
 import { copy, rimraf, mkdirp } from '../../utils/filesystem.js';
 import { generate_manifest } from '../generate_manifest/index.js';
 import { get_path } from '../../utils/routing.js';
+import { generate_package_json } from '../generate_package_json/index.js';
 
 /**
  * Creates the Builder which is passed to adapters for building the application.
@@ -149,6 +150,13 @@ export function create_builder({ config, build_data, prerendered, log }) {
 				routes: build_data.manifest_data.routes.filter(not_prerendered),
 				format
 			});
+		},
+
+		generatePackageJson: () => {
+			return generate_package_json({
+				build_data,
+				cwd: process.cwd()
+			})
 		},
 
 		getBuildDirectory(name) {
